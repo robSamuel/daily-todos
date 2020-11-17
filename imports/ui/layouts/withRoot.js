@@ -13,6 +13,7 @@ const getTheme = function(theme) {
     });
 };
 
+//TODO: Add an option in the settings to switch between light and dark
 const theme = getTheme({
     paletteType: 'light',
 });

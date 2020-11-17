@@ -1,6 +1,7 @@
 import React from 'react';
 
 import classNames from 'classnames';
+import { MainMenu } from '/imports/ui/layouts/NavMenu';
 
 /* Material UI */
 import Menu from '@material-ui/core/Menu';
@@ -107,6 +108,7 @@ class MainLayout extends React.Component {
 
     initBind() {
         this.onLogingOut = this.onLogingOut.bind(this);
+        this.onCloseLeftNav = this.onCloseLeftNav.bind(this);
         this.onHamburgerClick = this.onHamburgerClick.bind(this);
         this.onOpenAccountMenu = this.onOpenAccountMenu.bind(this);
         this.onCloseAccountMenu = this.onCloseAccountMenu.bind(this);
@@ -122,6 +124,10 @@ class MainLayout extends React.Component {
 
     onHamburgerClick() {
         this.setState(prevState => ({ open: !prevState.open }));
+    }
+
+    onCloseLeftNav() {
+        this.setState({ open: false });
     }
 
     onLogingOut() {
@@ -159,6 +165,10 @@ class MainLayout extends React.Component {
                         </IconButton>
                     </div>
                     <Divider />
+                    <MainMenu
+                        isOpened={state.open}
+                        onCloseMenu={this.onCloseLeftNav}
+                    />
                 </Drawer>
                 <div style={containerStyle}>
                     <AppBar
