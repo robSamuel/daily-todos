@@ -107,6 +107,7 @@ class MainLayout extends React.Component {
     }
 
     initBind() {
+        this.changeTitle = this.changeTitle.bind(this);
         this.onLogingOut = this.onLogingOut.bind(this);
         this.onCloseLeftNav = this.onCloseLeftNav.bind(this);
         this.onHamburgerClick = this.onHamburgerClick.bind(this);
@@ -128,6 +129,10 @@ class MainLayout extends React.Component {
 
     onCloseLeftNav() {
         this.setState({ open: false });
+    }
+
+    changeTitle(title) {
+        this.setState({ title });
     }
 
     onLogingOut() {
@@ -168,6 +173,7 @@ class MainLayout extends React.Component {
                     <MainMenu
                         isOpened={state.open}
                         onCloseMenu={this.onCloseLeftNav}
+                        changeTitle={this.changeTitle}
                     />
                 </Drawer>
                 <div style={containerStyle}>

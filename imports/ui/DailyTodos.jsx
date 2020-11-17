@@ -1,4 +1,6 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+
 import withRoot from './layouts/withRoot';
 import { MainLayout } from '/imports/ui/layouts/MainLayout';
 
@@ -22,11 +24,13 @@ class DailyTodos extends React.Component {
     render() {
 
         return(
-            <MainLayout>
-                <div className="main-div">
+            <BrowserRouter>
+                <MainLayout>
+                    <div className="main-div">
 
-                </div>
-            </MainLayout>
+                    </div>
+                </MainLayout>
+            </BrowserRouter>
         );
     }
 }
