@@ -41,13 +41,21 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
-    "@babel/eslint-parser": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/register": "^7.12.1",
+    "@meteorjs/eslint-config-meteor": "^1.0.5",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.1",
+    "babel-runtime": "^6.26.0",
     "eslint": "^7.13.0",
     "eslint-config-airbnb": "^18.2.1",
+    "eslint-import-resolver-meteor": "^0.4.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-meteor": "^7.2.2",
     "eslint-plugin-react": "^7.21.5",
-    "eslint-plugin-react-hooks": "^4.2.0"
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "lint-staged": "^10.5.1",
+    "webpack": "^5.5.0"
   }
 }
