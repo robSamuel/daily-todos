@@ -1,6 +1,6 @@
 import React from 'react';
-
 import classNames from 'classnames';
+import { NavLink } from 'react-router-dom';
 import { MainMenu } from '/imports/ui/layouts/NavMenu';
 
 /* Material UI */
@@ -11,6 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Divider from '@material-ui/core/Divider';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuItem from '@material-ui/core/MenuItem';
+import Settings from '@material-ui/icons/Settings';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -215,8 +216,22 @@ class MainLayout extends React.Component {
                                     color="inherit"
                                     noWrap
                                 >
-                                    Samuel Lab
+                                    Robert Samuel
                                 </Typography>
+                                <NavLink
+                                    to="/settings"
+                                    style={{ color: '#fff' }}
+                                >
+                                    <IconButton
+                                        aria-owns={
+                                            open ? 'menu-appbar' : null
+                                        }
+                                        aria-haspopup="true"
+                                        color="inherit"
+                                    >
+                                        <Settings />
+                                    </IconButton>
+                                </NavLink>
                                 <IconButton
                                     aria-owns={open ? 'menu-appbar' : null}
                                     aria-haspopup="true"
@@ -248,7 +263,7 @@ class MainLayout extends React.Component {
                     </AppBar>
                     <main className={[classes.content, 'layout-border'].join(' ')} style={{display: 'flex'}}>
                         <div className={classes.appBarSpacer} />
-                        <div style={{display: 'flex', position: 'relative', overflow: 'hidden'}}>
+                        <div style={{display: 'flex', flex: '1', position: 'relative', overflow: 'hidden'}}>
                             {children}
                         </div>
                     </main>
