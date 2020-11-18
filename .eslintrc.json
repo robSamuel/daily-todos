@@ -47,6 +47,7 @@
             "error",
             "always"
         ],
+        "semi": "error",
         "no-underscore-dangle": 0,
         "no-use-before-define": "error",
         "no-restricted-properties": "error",
@@ -72,6 +73,7 @@
         "react/display-name": "off",
         "react/no-multi-comp": "off",
         "react/no-find-dom-node": "off",
-        "react/jsx-one-expression-per-line": "off"
+        "react/jsx-one-expression-per-line": "off",
+        "no-console": "error"
     }
 }
