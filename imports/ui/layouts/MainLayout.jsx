@@ -18,6 +18,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
+const drawerWidth = 240;
+
 const styles = theme => ({
     root: {
         display: 'flex'
@@ -49,6 +51,10 @@ const styles = theme => ({
     },
     title: {
         flexGrow: 1,
+    },
+    menuButton: {
+        marginLeft: 12,
+        marginRight: 36,
     },
     drawer: {
         width: drawerWidth,
@@ -92,8 +98,6 @@ const containerStyle = {
     background: '#EEF4F9CC',
     overflow: 'hidden',
 };
-
-const drawerWidth = 240;
 
 class MainLayout extends React.Component {
     constructor(props) {

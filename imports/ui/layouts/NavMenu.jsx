@@ -11,7 +11,7 @@ import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText'
+import ListItemText from '@material-ui/core/ListItemText';
 
 const styles = theme => ({
     root: {
@@ -66,7 +66,7 @@ class MainMenu extends React.Component {
     }
 
     changeSelectedItem(title) {
-        const { state } = this;
+        const { props, state } = this;
         const modules = [...state.modules];
 
         for(const item of modules) {
@@ -236,7 +236,7 @@ class NavMenu extends React.Component {
                 </Tooltip>
                 {this.renderItem()}
             </React.Fragment>
-        )
+        );
 
         return (
             <MenuItem
@@ -249,6 +249,6 @@ class NavMenu extends React.Component {
             >
                 {itemContent}
             </MenuItem>
-        )
+        );
     }
 }
