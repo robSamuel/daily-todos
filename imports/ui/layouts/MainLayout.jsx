@@ -1,6 +1,6 @@
 import React from 'react';
-
 import classNames from 'classnames';
+import { NavLink } from 'react-router-dom';
 import { MainMenu } from '/imports/ui/layouts/NavMenu';
 
 /* Material UI */
@@ -218,15 +218,20 @@ class MainLayout extends React.Component {
                                 >
                                     Robert Samuel
                                 </Typography>
-                                <IconButton
-                                    aria-owns={
-                                        open ? 'menu-appbar' : null
-                                    }
-                                    aria-haspopup="true"
-                                    color="inherit"
+                                <NavLink
+                                    to="/settings"
+                                    style={{ color: '#fff' }}
                                 >
-                                    <Settings />
-                                </IconButton>
+                                    <IconButton
+                                        aria-owns={
+                                            open ? 'menu-appbar' : null
+                                        }
+                                        aria-haspopup="true"
+                                        color="inherit"
+                                    >
+                                        <Settings />
+                                    </IconButton>
+                                </NavLink>
                                 <IconButton
                                     aria-owns={open ? 'menu-appbar' : null}
                                     aria-haspopup="true"
@@ -258,7 +263,7 @@ class MainLayout extends React.Component {
                     </AppBar>
                     <main className={[classes.content, 'layout-border'].join(' ')} style={{display: 'flex'}}>
                         <div className={classes.appBarSpacer} />
-                        <div style={{display: 'flex', position: 'relative', overflow: 'hidden'}}>
+                        <div style={{display: 'flex', flex: '1', position: 'relative', overflow: 'hidden'}}>
                             {children}
                         </div>
                     </main>

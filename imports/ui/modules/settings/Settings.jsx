@@ -41,7 +41,7 @@ class Settings extends React.Component {
         this.onChangeTab = this.onChangeTab.bind(this);
     }
 
-    onChangeTab(value) {
+    onChangeTab(event, value) {
         this.setState({ selectedTab: value });
     }
 
@@ -57,7 +57,7 @@ class Settings extends React.Component {
                         onChange={this.onChangeTab}
                         indicatorColor="primary"
                         textColor="primary"
-                        variant="scrollable"
+                        centered
                     >
                         <Tab label="General" icon={<DesktopWindowsIcon />} />
                         <Tab label="Work Out" icon={<FitnessCenterIcon />} />
@@ -90,4 +90,6 @@ class Settings extends React.Component {
     }
 }
 
-export default withStyles(styles)(Settings);
+const wrapped = withStyles(styles)(Settings);
+
+export { wrapped as Settings };
