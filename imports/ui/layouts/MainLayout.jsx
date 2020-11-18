@@ -52,6 +52,10 @@ const styles = theme => ({
     title: {
         flexGrow: 1,
     },
+    menuButton: {
+        marginLeft: 12,
+        marginRight: 36,
+    },
     drawer: {
         width: drawerWidth,
         flexShrink: 0,
