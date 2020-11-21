@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 // Styles
 import 'react-table/react-table.css';
 import 'react-table-hoc-draggable-columns/dist/styles.css';
-// import '../../styles/theme/widgets/table.less';
+import '../../styles/theme/widgets/table.less';
 
 import PropTypes from 'prop-types';
 import { map, isEmpty } from 'lodash';

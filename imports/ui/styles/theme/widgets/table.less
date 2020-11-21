@@ -1,0 +1,420 @@
+// min -> minimo
+// h -> height
+// b -> body
+
+.rt-resizable-header-content {
+    font-weight: bold;
+}
+
+.rt-content-flex-direction-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.rt-overflow-hidden {
+    overflow: hidden;
+}
+
+.rt-drag-and-drop {
+    -webkit-box-flex: 99999;
+    -ms-flex: 99999 1 auto;
+    flex: 99999 1 auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    overflow: auto;
+    .rt-tr {
+        position: relative;
+    }
+}
+
+.rt-content-body {
+    -webkit-box-flex: 99999;
+    -ms-flex: 99999 1 auto;
+    flex: 99999 1 auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    overflow: auto;
+}
+
+@borderColor: 1px solid rgba(0, 0, 0, 0.1);
+.ReactTable {
+    border: 0 !important;
+    border-top: @borderColor;
+    border-bottom: @borderColor;
+
+    .rt-thead {
+        border-bottom: @borderColor;
+        font-size: 12px;
+        color: #707090;
+        box-shadow: none !important;
+
+        .rt-resizable-header {
+            padding-right: 18px;
+        }
+    }
+
+    .column-center {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: none;
+    }
+
+    &.no-style {
+        .rt-thead {
+            display: none;
+        }
+
+        .rt-table {
+            border: 0;
+        }
+
+        .rt-tbody {
+            .rt-tr.-even {
+                background: initial !important;
+            }
+
+            .rt-tr-group {
+                border-bottom: 1px transparent;
+            }
+        }
+    }
+
+    .rt-thead,
+    .rt-tbody .rt-tr {
+        font-size: 12px;
+        &.-odd {
+            background: #fff !important;
+        }
+
+        &.-even {
+            background: rgb(245, 245, 245) !important;
+        }
+    }
+
+    .rt-tbody .rt-td {
+        border-right: 0 !important;
+    }
+
+    .rt-tbody .rt-tr-group:last-child {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .rt-tbody .rt-tr.unread {
+        background: #ebebf2 !important;
+    }
+
+    .rt-tbody .rt-tr.read {
+        background: #fff !important;
+    }
+
+    .rt-table {
+        border: @borderColor;
+    }
+
+    &.rt-table-expandable {
+        .rt-tbody .rt-tr-group .rt-expandable {
+            display: none;
+        }
+
+        .rt-tbody .rt-tr-group:last-child {
+            border-bottom: none;
+        }
+
+        .rt-tr {
+            border-left: @borderColor;
+            border-right: @borderColor;
+            .rt-th:first-child {
+                display: none;
+            }
+        }
+
+        .rt-table {
+            border: none;
+            background: transparent;
+        }
+
+        .rt-noData {
+            background: #fff;
+        }
+    }
+
+    &.no-sort-table .rt-thead {
+        .rt-th:before,
+        .rt-th::after {
+            display: none;
+        }
+    }
+
+    &.rt-cursor-pointer {
+        .rt-tbody {
+            .rt-tr {
+                cursor: pointer;
+            }
+        }
+    }
+
+    &.rt-cursor-default {
+        .rt-tbody {
+            .rt-tr {
+                cursor: default;
+            }
+        }
+    }
+
+    .rt-resizing .rt-thead .rt-th.-cursor-pointer {
+        cursor: col-resize;
+    }
+
+    .rt-resizer {
+        width: 3px;
+        right: -2px;
+    }
+}
+
+.rt-table {
+    background: #fff;
+}
+
+.ReactTable.payments .rt-tbody {
+    overflow: hidden;
+}
+
+.ReactTable.payments .rt-thead .rt-tr .rt-th:first-child,
+.rt-tbody .rt-tr-group .rt-expandable {
+    display: initial;
+}
+.ReactTable.payments .rt-thead.-header {
+    border-top: @borderColor;
+}
+
+.ReactTable.payment-schedule-table .rt-tbody {
+    overflow: hidden;
+}
+
+.ReactTable .rt-noData {
+    position: absolute;
+    background: none;
+    transition: all 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ReactTable .rt-thead.-header {
+    z-index: 2;
+    background: #fff;
+}
+
+.ReactTable.payment-schedule-table .rt-thead.-headerGroups {
+    color: #707090;
+    border-bottom: none;
+    font-size: 12px;
+    font-weight: bold;
+    background: #fff;
+}
+
+.ReactTable.payment-schedule-table .rt-thead.-header {
+    box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.25);
+}
+
+.ReactTable.payment-schedule-table .rt-tbody .rt-tr-group,
+.ReactTable.payment-schedule-table .rt-thead.-header {
+    border-bottom: none;
+}
+
+.ReactTable.payment-schedule-table .rt-thead .rt-tr .rt-th:first-child,
+.rt-tbody .rt-tr-group .rt-expandable {
+    display: initial;
+}
+.ReactTable.payment-transaction-table .rt-thead .rt-tr .rt-th:first-child {
+    display: initial;
+}
+
+.ReactTable.insurance-table .rt-tbody {
+    overflow: hidden;
+}
+.ReactTable.insurance-table .rt-thead .rt-tr .rt-th:first-child {
+    display: initial;
+}
+
+.ReactTable.promiseToPay-table .rt-tbody {
+    overflow: hidden;
+}
+
+.ReactTable.promiseToPay-table .rt-thead .rt-tr .rt-th:first-child {
+    display: initial;
+}
+
+.ReactTable.bhph-files-table .rt-tbody {
+    overflow: hidden;
+}
+
+.ReactTable.bhph-files-table .rt-thead .rt-tr .rt-th:first-child {
+    display: initial;
+}
+
+.ReactTable .rt-tr-group,
+.rt-tr.-odd,
+.ReactTable .rt-tr-group,
+.rt-tr.-even {
+    flex: none !important;
+}
+
+.ReactTable.loadPost-table .rt-thead .rt-tr .rt-th:first-child {
+    display: initial;
+}
+
+.ReactTable .rt-thead .rt-th.-sort-desc,
+.ReactTable .rt-thead .rt-td.-sort-desc {
+    box-shadow: none !important;
+}
+
+.table-selected .ReactTable .rt-tbody .rt-tr.active {
+    background: #bdc3c7 !important;
+}
+
+.ReactTable {
+    &.rt-min-hb-0 .rt-tbody .rt-tr-group .rt-tr {
+        min-height: 26px;
+    }
+
+    &.rt-min-hb-1 .rt-tbody .rt-tr-group .rt-tr {
+        min-height: 32px;
+    }
+
+    &.rt-min-hb-2 .rt-tbody .rt-tr-group .rt-tr {
+        min-height: 48px;
+    }
+
+    &.rt-min-hb-3 .rt-tbody .rt-tr-group .rt-tr {
+        min-height: 56px;
+    }
+
+    &.rt-min-hb-4 .rt-tbody .rt-tr-group .rt-tr {
+        min-height: 64px;
+    }
+
+    &.rt-min-hb-5 .rt-tbody .rt-tr-group .rt-tr {
+        min-height: 72px;
+    }
+
+    &.rt-min-hb-6 .rt-tbody .rt-tr-group .rt-tr {
+        min-height: 104px;
+    }
+
+    &.center .rt-tbody .rt-tr-group .rt-tr {
+        align-items: center;
+    }
+
+    &.top .rt-tbody .rt-tr-group .rt-tr {
+        align-items: flex-start;
+    }
+
+    &.bottom .rt-tbody .rt-tr-group .rt-tr {
+        align-items: flex-end;
+    }
+
+    .rt-tbody {
+        overflow-x: hidden;
+    }
+}
+
+.p-12 {
+    padding: 12px;
+}
+
+.rt-thead {
+    .rt-th:before,
+    .rt-th:after {
+        position: absolute;
+        right: 6px;
+        color: #d2d2d2;
+        font-size: 10px;
+    }
+
+    .rt-th.no-sort:before,
+    .rt-th.no-sort:after {
+        display: none;
+    }
+
+    .rt-th:before {
+        content: '▲';
+        top: 50%;
+        margin-top: -10px;
+    }
+
+    .rt-th:after {
+        content: '▼';
+        bottom: 50%;
+        margin-bottom: -10px;
+    }
+
+    .-sort-desc {
+        box-shadow: none !important;
+        &:after {
+            color: #707090;
+        }
+    }
+
+    .-sort-asc {
+        box-shadow: none !important;
+        &:before {
+            color: #707090;
+        }
+    }
+}
+
+.rt-draggable-container {
+    height: 100%;
+
+    .rt-thead {
+        .rt-resizable-header-content {
+            border: 0;
+            height: 100%;
+
+            .draggable-header {
+                height: 100%;
+                padding: 0px 8px;
+            }
+        }
+    }
+}
+
+.recycler-row-group {
+    min-height: 50px;
+    justify-content: center;
+    & > .rt-tr {
+        flex: 1 !important;
+    }
+}
+
+#loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background: #fff;
+    opacity: 0.6;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
