@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Table } from '/imports/ui/components/widgets/Table';
 import { SettingsPanel } from '/imports/ui/components/widgets/SettingsPanel';
 
 /*Material UI*/
@@ -37,12 +38,50 @@ class GithubUsers extends React.Component {
 
     }
 
+    getColumns() {
+        const columnStyle = {
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'left',
+            border: 'none',
+        };
+
+        const columns = [
+            {
+                Header: 'User Name',
+                accessor: 'name',
+                style: columnStyle,
+            },
+            {
+                Header: 'Description',
+                accessor: 'description',
+                style: columnStyle,
+            },
+            {
+                Header: 'Type',
+                id: 'type',
+                accessor: record => record,
+                style: columnStyle,
+            },
+            {
+                Header: 'Projects',
+                accessor: 'projects',
+                style: columnStyle,
+            },
+        ];
+
+        return columns;
+    }
+
     renderTable() {
 
         return (
-            <div>
-
-            </div>
+            <Table
+                data={[]}
+                columns={this.getColumns()}
+                load={false}
+            />
         );
     }
 

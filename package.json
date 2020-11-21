@@ -13,6 +13,7 @@
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/pickers": "^3.2.10",
+    "antd": "^4.8.4",
     "array-move": "^3.0.1",
     "axios": "^0.21.0",
     "bcrypt": "^5.0.0",
@@ -26,7 +27,8 @@
     "react-dom": "^16.13.1",
     "react-hot-keys": "^2.6.0",
     "react-router-dom": "^5.2.0",
-    "react-table": "^7.6.2",
+    "react-table": "^6.8.2",
+    "react-table-hoc-draggable-columns": "^1.2.5",
     "string": "^3.3.3",
     "subscriptions-transport-ws": "^0.9.18",
     "uuid": "^8.3.1"
