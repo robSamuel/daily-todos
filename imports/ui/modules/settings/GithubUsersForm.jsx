@@ -7,6 +7,7 @@ import {ModalAppBar } from '/imports/ui/components/widgets/ModalAppBar';
 /* Material UI */
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -31,8 +32,16 @@ const styles = theme =>
             margin: 0,
             padding: '5px 24px',
         },
-        checkBox: {
-            padding: 0,
+        field: {
+            display: 'flex',
+            marginTop:10,
+            height: 42,
+            alignItems: 'center',
+        },
+        checkbox: {
+            display: 'flex',
+            marginTop:10,
+            alignItems: 'center',
         },
     });
 
@@ -43,7 +52,9 @@ class GithubUsersForm extends React.Component {
         this.state = {
             firstName: '',
             lastName: '',
-            userName: ''
+            userName: '',
+            showFollowers: false,
+            showFollowing: false
         };
 
         this.initBind();
@@ -86,8 +97,49 @@ class GithubUsersForm extends React.Component {
         );
     }
 
+    renderCheckbox(label, fieldName, checkboxValue) {
+        const { props: { classes } } = this;
+
+        return(
+            <div className={classes.checkbox}>
+                <label>{label}</label>
+                <Checkbox
+                    checked={checkboxValue}
+                    onChange={event => {
+                        const value = event.target.checked;
+                        this.onChange(fieldName, value);
+                    }}
+                    color="primary"
+                    inputProps={{
+                        'aria-label': 'primary checkbox',
+                    }}
+                />
+            </div>
+        );
+    }
+
+    renderSpace() {
+        const { props: { classes } } = this;
+
+        return <div className={classes.field}></div>;
+    }
+
     render() {
-        const { props: { classes, opened, onClose, data }, state: { firstName, lastName, userName} } = this;
+        const {
+            props: {
+                classes,
+                opened,
+                onClose,
+                data
+            },
+            state: {
+                firstName,
+                lastName,
+                userName,
+                showFollowers,
+                showFollowing
+            }
+        } = this;
         const modalTitle = isEmpty(data) ? 'New' : 'Edit';
 
         return(
@@ -104,11 +156,22 @@ class GithubUsersForm extends React.Component {
                 />
                 <DialogContent className={classes.dialogContent} dividers>
                     <div className={classes.dialogColumns}>
+                        <div className={classes.field}>
+                            <label>Personal Information</label>
+                        </div>
                         {this.renderTextField('First Name', firstName, 'firstName')}
                         {this.renderTextField('Last Name', lastName, 'lastName')}
+                        <div className={classes.field}>
+                            <label>Optional Information</label>
+                        </div>
+                        {this.renderCheckbox('Show Followers', 'showFollowers', showFollowers)}
                     </div>
                     <div className={classes.dialogColumns}>
+                        {this.renderSpace()}
                         {this.renderTextField('User Name', userName, 'userName')}
+                        {this.renderSpace()}
+                        {this.renderSpace()}
+                        {this.renderCheckbox('Show Following', 'showFollowing', showFollowing)}
                     </div>
                 </DialogContent>
                 <DialogActions className={classes.dialogFooter}>
