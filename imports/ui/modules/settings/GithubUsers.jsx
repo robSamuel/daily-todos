@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from '/imports/ui/components/widgets/Table';
 import { SettingsPanel } from '/imports/ui/components/widgets/SettingsPanel';
+import { GithubUsersForm } from '/imports/ui/modules/settings/GithubUsersForm';
 
 /*Material UI*/
 import Button from '@material-ui/core/Button';
@@ -35,7 +36,16 @@ class GithubUsers extends React.Component {
     };
 
     initBind() {
+        this.onClose = this.onClose.bind(this);
+        this.onCreate = this.onCreate.bind(this);
+    }
 
+    onClose() {
+        this.setState({ open: false });
+    }
+
+    onCreate() {
+        this.setState({ open: true, selectedRecord: null });
     }
 
     getColumns() {
@@ -86,7 +96,7 @@ class GithubUsers extends React.Component {
     }
 
     render() {
-        const { props: { classes } } = this;
+        const { props: { classes }, state: { open } } = this;
 
         return(
             <SettingsPanel>
@@ -95,6 +105,7 @@ class GithubUsers extends React.Component {
                         variant="contained"
                         color="primary"
                         className={classes.buttonStyle}
+                        onClick={this.onCreate}
                     >
                         New
                     </Button>
@@ -114,6 +125,7 @@ class GithubUsers extends React.Component {
                     </Button>
                 </SettingsPanel.Toolbar>
                 {this.renderTable()}
+                {open && <GithubUsersForm opened={open} onClose={this.onClose} />}
             </SettingsPanel>
         );
     }
