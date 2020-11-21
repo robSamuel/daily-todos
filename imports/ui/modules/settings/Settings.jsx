@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { GithubSettings } from '/imports/ui/modules/settings/panels/GithubSettings';
 
 /*Material UI*/
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import AppBar from '@material-ui/core/AppBar';
+import GitHubIcon from '@material-ui/icons/GitHub';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import { withStyles } from '@material-ui/core/styles';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
@@ -20,6 +22,13 @@ const styles = () => ({
         height: '100%',
         zIndex: 900,
     },
+    tabContainerStyle: {
+        flex: 1,
+        display: 'flex',
+        background: '#FFF',
+        marginTop: '10pxy',
+        overflow: 'hidden',
+    }
 });
 
 class Settings extends React.Component {
@@ -60,28 +69,34 @@ class Settings extends React.Component {
                         centered
                     >
                         <Tab label="General" icon={<DesktopWindowsIcon />} />
-                        <Tab label="Work Out" icon={<FitnessCenterIcon />} />
-                        <Tab label="Twitter" icon={<TwitterIcon />} />
-                        <Tab label="Finances" icon={<AttachMoneyIcon />} />
+                        <Tab label="Github" icon={<GitHubIcon />} />
+                        <Tab label="Work Out" disabled icon={<FitnessCenterIcon />} />
+                        <Tab label="Twitter" disabled icon={<TwitterIcon />} />
+                        <Tab label="Finances" disabled icon={<AttachMoneyIcon />} />
                     </Tabs>
                 </AppBar>
                 {selectedTab === 0 && (
-                    <div>
+                    <div className={classes.tabContainerStyle}>
                         <label htmlFor="">General</label>
                     </div>
                 )}
                 {selectedTab === 1 && (
-                    <div>
-                        <label htmlFor="">Work Out</label>
+                    <div className={classes.tabContainerStyle}>
+                        <GithubSettings />
                     </div>
                 )}
                 {selectedTab === 2 && (
-                    <div>
-                        <label htmlFor="">Twitter</label>
+                    <div className={classes.tabContainerStyle}>
+                        <label htmlFor="">Work Out</label>
                     </div>
                 )}
                 {selectedTab === 3 && (
-                    <div>
+                    <div className={classes.tabContainerStyle}>
+                        <label htmlFor="">Twitter</label>
+                    </div>
+                )}
+                {selectedTab === 4 && (
+                    <div className={classes.tabContainerStyle}>
                         <label htmlFor="">Finances</label>
                     </div>
                 )}
