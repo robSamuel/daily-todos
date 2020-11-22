@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SidebarSettings from '/imports/ui/components/widgets/SidebarSettings';
-import { GithubUsers } from '/imports/ui/modules/settings/GithubUsers';
+import { GithubUsersContainer } from '/imports/ui/components/containers/GithubUsersContainer';
 
 import { withStyles } from '@material-ui/core/styles';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -47,8 +47,7 @@ class GithubSettings extends React.Component {
     }
 
     getListItemToSidebar() {
-        const { props } = this;
-        const { classes } = props;
+        const { props: { classes } } = this;
 
         return [
             {
@@ -72,7 +71,7 @@ class GithubSettings extends React.Component {
                 />
                 <div style={{display: 'flex', flexDirection: 'column', flex: 1, margin: 10, position: 'relative'}}>
                     {selectedSubModule === SubModules.USERS && (
-                        <GithubUsers />
+                        <GithubUsersContainer />
                     )}
                 </div>
             </div>

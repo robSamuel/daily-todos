@@ -2,14 +2,13 @@ import { MeteorContainer } from '/imports/ui/components/MeteorContainer';
 import { GithubUsers as GithubUsersCollection } from '/imports/api/settings/collections';
 import { GithubUsers } from '/imports/ui/modules/settings/GithubUsers';
 
-const wrap = (...params) => {
-    const usersCondition = { groupCode: 1 };
-    const handle = Meteor.subscribe('githubUsers', usersCondition);
+const wrap = () => {
+    const handle = Meteor.subscribe('githubUsers', {});
+    const records = GithubUsersCollection.find({ 'groupCode': 1 }).fetch();
 
     return {
         loading: !handle.ready(),
-        records: GithubUsersCollection.find(usersCondition),
-        ...params
+        records
     };
 };
 

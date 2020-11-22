@@ -1,8 +1,10 @@
 import React from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 import { Table } from '/imports/ui/components/widgets/Table';
 import { SettingsPanel } from '/imports/ui/components/widgets/SettingsPanel';
-import { GithubUsersContainer } from '/imports/ui/components/containers/GithubUsersContainer';
+import { GithubUsersForm } from '/imports/ui/modules/settings/GithubUsersForm';
 
 /*Material UI*/
 import Button from '@material-ui/core/Button';
@@ -20,11 +22,7 @@ class GithubUsers extends React.Component {
 
         this.state = {
             open: false,
-            records: [],
             selectedRecord: null,
-            contentTable: {
-
-            }
         };
 
         this.initBind();
@@ -38,6 +36,10 @@ class GithubUsers extends React.Component {
     initBind() {
         this.onClose = this.onClose.bind(this);
         this.onCreate = this.onCreate.bind(this);
+        this.getRecords = this.getRecords.bind(this);
+        this.onRowClick = this.onRowClick.bind(this);
+        this.selectedRow = this.selectedRow.bind(this);
+        this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
     }
 
     onClose() {
@@ -60,37 +62,114 @@ class GithubUsers extends React.Component {
         const columns = [
             {
                 Header: 'User Name',
-                accessor: 'name',
+                accessor: 'userName',
                 style: columnStyle,
             },
             {
-                Header: 'Description',
-                accessor: 'description',
+                Header: 'First Name',
+                accessor: 'firstName',
                 style: columnStyle,
             },
             {
-                Header: 'Type',
-                id: 'type',
+                Header: 'Last Name',
+                id: 'lastName',
+                style: columnStyle,
+            },
+            {
+                Header: 'Show Followers',
+                id: 'showFollowers',
                 accessor: record => record,
                 style: columnStyle,
+                Cell: props => {
+                    const record = props.value || {};
+                    const show = record.showFollowers ? 'Yes' : 'No';
+
+                    return <span>{show}</span>;
+                }
             },
             {
-                Header: 'Projects',
-                accessor: 'projects',
+                Header: 'Show Following',
+                id: 'showFollowing',
+                accessor: record => record,
                 style: columnStyle,
+                Cell: props => {
+                    const record = props.value || {};
+                    const show = record.showFollowing ? 'Yes' : 'No';
+
+                    return <span>{show}</span>;
+                }
+            },
+            {
+                Header: 'Created By',
+                accessor: 'createdBy',
+                style: columnStyle,
+            },
+            {
+                Header: 'Created On',
+                id: 'createdOn',
+                accessor: record => record,
+                style: columnStyle,
+                Cell: props => {
+                    const record = props.value || {};
+                    const date = moment(record.createdOn).format('DD/MM/YYYY HH:mm');
+
+                    return <span>{date}</span>;
+                }
             },
         ];
 
         return columns;
     }
 
+    getRecords() {
+        const { props: { records } } = this;
+        const data = [];
+
+        for(const record of records) {
+            data.push(record);
+        }
+
+        return data;
+    }
+
+    onRowClick(record) {
+        if(!isEmpty(record)){
+            this.setState({ selectedRecord: record });
+        }
+    }
+
+    onRowDoubleClick(record) {
+        if(!isEmpty(record)){
+            this.setState({ open: true, selectedRecord: record });
+        }
+    }
+
+    selectedRow(id) {
+        const { state: { selectedRecord } } = this;
+
+        return isEmpty(selectedRecord) ? false : selectedRecord._id === id;
+    }
+
     renderTable() {
+        const { props: { records } } = this;
+
 
         return (
             <Table
-                data={[]}
+                data={records}
                 columns={this.getColumns()}
                 load={false}
+                rowSelected={false}
+                getTrProps={(state, rowInfo) => {
+                    const record = rowInfo.original;
+                    const selected = this.selectedRow(rowInfo.original._id);
+
+                    return {
+                        onClick: () => this.onRowClick(record),
+                        onDoubleClick: () => this.onRowDoubleClick(record),
+                        className: selected ? 'active' : '',
+                    };
+                }}
             />
         );
     }
@@ -125,7 +204,7 @@ class GithubUsers extends React.Component {
                     </Button>
                 </SettingsPanel.Toolbar>
                 {this.renderTable()}
-                {open && <GithubUsersContainer opened={open} onClose={this.onClose} />}
+                {open && <GithubUsersForm opened={open} onClose={this.onClose} />}
             </SettingsPanel>
         );
     }

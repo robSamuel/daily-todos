@@ -19,13 +19,12 @@ export default class SidebarSettings extends React.Component {
     };
 
     getListItems() {
-        const { props } = this;
-        const { items, classes, selected } = props;
+        const { props: { items, classes, selected, change } } = this;
 
         return items.map((item, index) => (
             <Button
                 key={index}
-                onClick={() => props.change(index)}
+                onClick={() => change(index)}
                 color={selected === index ? 'primary' : 'default'}
                 style={{ padding: 10 }}
                 size="small"
@@ -38,8 +37,7 @@ export default class SidebarSettings extends React.Component {
     }
 
     render() {
-        const { props } = this;
-        const { minWidth } = props;
+        const { props: { minWidth } } = this;
 
         const containerStyle = {
             display: 'flex',
