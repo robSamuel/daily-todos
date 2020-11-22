@@ -42,8 +42,8 @@ class GithubUsers extends React.Component {
         this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
     }
 
-    onClose() {
-        this.setState({ open: false });
+    onClose(record) {
+        this.setState({ open: false, selectedRecord: record });
     }
 
     onCreate() {
@@ -175,7 +175,8 @@ class GithubUsers extends React.Component {
     }
 
     render() {
-        const { props: { classes }, state: { open } } = this;
+        const { props: { classes }, state: { open, selectedRecord } } = this;
+        const id = isEmpty(selectedRecord) ? '' : selectedRecord._id ;
 
         return(
             <SettingsPanel>
@@ -204,7 +205,14 @@ class GithubUsers extends React.Component {
                     </Button>
                 </SettingsPanel.Toolbar>
                 {this.renderTable()}
-                {open && <GithubUsersForm opened={open} onClose={this.onClose} />}
+                {open && (
+                    <GithubUsersForm
+                        id={id}
+                        opened={open}
+                        record={selectedRecord}
+                        onClose={this.onClose}
+                    />
+                )}
             </SettingsPanel>
         );
     }
