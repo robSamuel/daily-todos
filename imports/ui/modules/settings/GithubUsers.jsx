@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from '/imports/ui/components/widgets/Table';
 import { SettingsPanel } from '/imports/ui/components/widgets/SettingsPanel';
-import { GithubUsersForm } from '/imports/ui/modules/settings/GithubUsersForm';
+import { GithubUsersContainer } from '/imports/ui/components/containers/GithubUsersContainer';
 
 /*Material UI*/
 import Button from '@material-ui/core/Button';
@@ -125,7 +125,7 @@ class GithubUsers extends React.Component {
                     </Button>
                 </SettingsPanel.Toolbar>
                 {this.renderTable()}
-                {open && <GithubUsersForm opened={open} onClose={this.onClose} />}
+                {open && <GithubUsersContainer opened={open} onClose={this.onClose} />}
             </SettingsPanel>
         );
     }
