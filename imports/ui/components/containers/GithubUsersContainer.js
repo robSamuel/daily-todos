@@ -4,6 +4,7 @@ import { GithubUsers } from '/imports/ui/modules/settings/GithubUsers';
 
 const wrap = () => {
     const handle = Meteor.subscribe('githubUsers', {});
+    //TODO: Remove the harcoded 1 value when the login with users has been implemented
     const records = GithubUsersCollection.find({ 'groupCode': 1 }).fetch();
 
     return {

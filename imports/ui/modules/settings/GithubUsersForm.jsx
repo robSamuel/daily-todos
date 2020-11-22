@@ -93,20 +93,16 @@ class GithubUsersForm extends React.Component {
 
         try {
             if(!StringUtils.isEmpty(id)) {
-                console.log(userData);
+                data._id = id; //TODO: REmove this when the implementation of the edit.
             } else {
                 data.createdOn = new Date();
                 data.createdBy = 1;
-
-                console.log(data);
 
                 Meteor.call('addGithubUser', data, error => {
                     if(!error) {
                         message.success('Github User added succesfully!');
 
                         onClose(data);
-                    } else {
-                        console.log(error);
                     }
                 });
             }
