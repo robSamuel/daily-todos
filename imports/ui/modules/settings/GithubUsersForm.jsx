@@ -77,6 +77,7 @@ class GithubUsersForm extends React.Component {
 
     initBind() {
         this.onSave = this.onSave.bind(this);
+        this.onClose = this.onClose.bind(this);
         this.onChange = this.onChange.bind(this);
     }
 
@@ -117,6 +118,13 @@ class GithubUsersForm extends React.Component {
         this.setState(prevState => ({
             data: { ...prevState.data, [field]: value }
         }));
+    }
+
+    onClose() {
+        const { props: { onClose, record } } = this;
+        const data = isEmpty(record) ? null : record;
+
+        onClose(data);
     }
 
     renderTextField(label, fieldValue, fieldName) {
@@ -168,7 +176,6 @@ class GithubUsersForm extends React.Component {
             props: {
                 classes,
                 opened,
-                onClose,
                 data
             },
             state: {
@@ -187,14 +194,14 @@ class GithubUsersForm extends React.Component {
         return(
             <Dialog
                 open={opened}
-                onClose={onClose}
+                onClose={this.onClose}
                 disableBackdropClick
                 maxWidth="sm"
                 fullWidth={true}
             >
                 <ModalAppBar
                     title={`${modalTitle} Github User`}
-                    onClose={onClose}
+                    onClose={this.onClose}
                 />
                 <DialogContent className={classes.dialogContent} dividers>
                     <div className={classes.dialogColumns}>

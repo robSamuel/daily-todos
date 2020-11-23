@@ -8,5 +8,11 @@ Meteor.methods({
         record._id = Random.id();
 
         GithubUsers.insert(record);
+    },
+
+    deleteGithubUser: function(id) {
+        check(id, String);
+
+        GithubUsers.remove({ _id: id });
     }
 });

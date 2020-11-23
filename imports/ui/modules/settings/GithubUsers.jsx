@@ -22,6 +22,7 @@ class GithubUsers extends React.Component {
 
         this.state = {
             open: false,
+            isDeleting: false,
             selectedRecord: null,
         };
 
@@ -36,6 +37,7 @@ class GithubUsers extends React.Component {
     initBind() {
         this.onClose = this.onClose.bind(this);
         this.onCreate = this.onCreate.bind(this);
+        this.onDelete = this.onDelete.bind(this);
         this.getRecords = this.getRecords.bind(this);
         this.onRowClick = this.onRowClick.bind(this);
         this.selectedRow = this.selectedRow.bind(this);
@@ -48,6 +50,10 @@ class GithubUsers extends React.Component {
 
     onCreate() {
         this.setState({ open: true, selectedRecord: null });
+    }
+
+    onDelete() {
+        this.setState({ isDeleting: true });
     }
 
     getColumns() {
@@ -72,7 +78,7 @@ class GithubUsers extends React.Component {
             },
             {
                 Header: 'Last Name',
-                id: 'lastName',
+                accessor: 'lastName',
                 style: columnStyle,
             },
             {
@@ -176,7 +182,8 @@ class GithubUsers extends React.Component {
 
     render() {
         const { props: { classes }, state: { open, selectedRecord } } = this;
-        const id = isEmpty(selectedRecord) ? '' : selectedRecord._id ;
+        const isNotSelected = isEmpty(selectedRecord);
+        const id = isNotSelected ? '' :  selectedRecord._id;
 
         return(
             <SettingsPanel>
@@ -193,6 +200,7 @@ class GithubUsers extends React.Component {
                         variant="contained"
                         color="primary"
                         className={classes.buttonStyle}
+                        disabled={isNotSelected}
                     >
                         Edit
                     </Button>
@@ -200,6 +208,8 @@ class GithubUsers extends React.Component {
                         variant="contained"
                         color="secondary"
                         className={classes.buttonStyle}
+                        onClick={this.onDelete}
+                        disabled={isNotSelected}
                     >
                         Delete
                     </Button>
