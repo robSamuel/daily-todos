@@ -1,11 +1,12 @@
 import React from 'react';
 import moment from 'moment';
+import { message } from 'antd';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 import { Table } from '/imports/ui/components/widgets/Table';
+import { DialogConfirm } from '/imports/ui/components/widgets/DialogConfirm';
 import { SettingsPanel } from '/imports/ui/components/widgets/SettingsPanel';
 import { GithubUsersForm } from '/imports/ui/modules/settings/GithubUsersForm';
-
 /*Material UI*/
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
@@ -24,6 +25,7 @@ class GithubUsers extends React.Component {
             open: false,
             isDeleting: false,
             selectedRecord: null,
+            showDeleteModal: false,
         };
 
         this.initBind();
@@ -42,6 +44,7 @@ class GithubUsers extends React.Component {
         this.onRowClick = this.onRowClick.bind(this);
         this.selectedRow = this.selectedRow.bind(this);
         this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
+        this.onShowDeleteModal = this.onShowDeleteModal.bind(this);
     }
 
     onClose(record) {
@@ -52,8 +55,29 @@ class GithubUsers extends React.Component {
         this.setState({ open: true, selectedRecord: null });
     }
 
+    onShowDeleteModal() {
+        this.setState(prevState => ({ showDeleteModal: !prevState.showDeleteModal }));
+    }
+
     onDelete() {
+        const { state: { selectedRecord } } = this;
+        const userName = selectedRecord.userName || '';
+
         this.setState({ isDeleting: true });
+
+        try {
+            Meteor.call('deleteGithubUser', selectedRecord._id, error => {
+                if(!error) {
+                    message.success(`User ${userName} was deleted succesfully!`);
+
+                    this.setState({ showDeleteModal: false, selectedRecord: null });
+                }
+            });
+        } catch (e) {
+            message.error(`There was an error while trying to delete the user ${userName}.`);
+        } finally {
+            this.setState({ isDeleting: false });
+        }
     }
 
     getColumns() {
@@ -159,7 +183,6 @@ class GithubUsers extends React.Component {
     renderTable() {
         const { props: { records } } = this;
 
-
         return (
             <Table
                 data={records}
@@ -180,8 +203,25 @@ class GithubUsers extends React.Component {
         );
     }
 
+    renderDeleteModal() {
+        const { state: { selectedRecord, showDeleteModal, isDeleting } } = this;
+        const description = `Are you sure you want to delete user ${selectedRecord.userName}`;
+
+        return(
+            <DialogConfirm
+                opened={showDeleteModal}
+                title="Delete User"
+                titleOk="Delete"
+                description={description}
+                onClose={this.onShowDeleteModal}
+                isSendingData={isDeleting}
+                onAccept={this.onDelete}
+            />
+        );
+    }
+
     render() {
-        const { props: { classes }, state: { open, selectedRecord } } = this;
+        const { props: { classes }, state: { open, selectedRecord, showDeleteModal } } = this;
         const isNotSelected = isEmpty(selectedRecord);
         const id = isNotSelected ? '' :  selectedRecord._id;
 
@@ -208,7 +248,7 @@ class GithubUsers extends React.Component {
                         variant="contained"
                         color="secondary"
                         className={classes.buttonStyle}
-                        onClick={this.onDelete}
+                        onClick={this.onShowDeleteModal}
                         disabled={isNotSelected}
                     >
                         Delete
@@ -223,6 +263,7 @@ class GithubUsers extends React.Component {
                         onClose={this.onClose}
                     />
                 )}
+                {showDeleteModal && this.renderDeleteModal()}
             </SettingsPanel>
         );
     }

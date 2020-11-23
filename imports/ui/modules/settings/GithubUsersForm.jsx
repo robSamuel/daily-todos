@@ -108,7 +108,7 @@ class GithubUsersForm extends React.Component {
                 });
             }
         } catch (e) {
-            message.error('There was an error while trying to save the GPS.');
+            message.error('There was an error while trying to save the User.');
         } finally {
             this.setState({ saving: false });
         }
