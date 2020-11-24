@@ -10,6 +10,14 @@ Meteor.methods({
         GithubUsers.insert(record);
     },
 
+    updateGithubUser: function(data) {
+        check(data, Object);
+        const id = data._id;
+        delete data._id;
+
+        GithubUsers.update({ _id: id }, { $set: data });
+    },
+
     deleteGithubUser: function(id) {
         check(id, String);
 

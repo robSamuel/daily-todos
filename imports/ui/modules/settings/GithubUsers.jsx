@@ -55,6 +55,14 @@ class GithubUsers extends React.Component {
         this.setState({ open: true, selectedRecord: null });
     }
 
+    onEdit(record) {
+        const { state } = this;
+        const user = isEmpty(record) ? state.selectedRecord : record;
+
+        if(!isEmpty(user))
+            this.setState({ open: true, selectedRecord: user });
+    }
+
     onShowDeleteModal() {
         this.setState(prevState => ({ showDeleteModal: !prevState.showDeleteModal }));
     }

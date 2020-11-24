@@ -52,13 +52,15 @@ class GithubUsersForm extends React.Component {
     constructor(props) {
         super(props);
 
-        const data = props.record || {
-            firstName: '',
-            lastName: '',
-            userName: '',
-            showFollowers: false,
-            showFollowing: false
-        };
+        const data = isEmpty(props.record) ?
+            {
+                firstName: '',
+                lastName: '',
+                userName: '',
+                showFollowers: false,
+                showFollowing: false
+            } :
+            { ...props.record };
 
         this.state = {
             data,
@@ -69,7 +71,6 @@ class GithubUsersForm extends React.Component {
     }
 
     static propTypes = {
-        id: PropTypes.string,
         record: PropTypes.object,
         opened: PropTypes.bool.isRequired,
         onClose: PropTypes.func.isRequired,
@@ -82,22 +83,20 @@ class GithubUsersForm extends React.Component {
     }
 
     onSave() {
-        const { props: { id, onClose }, state: { data: userData} } = this;
+        const { props: { onClose }, state: { data: userData} } = this;
         const data = {
             ...userData,
             modifiedBy: 1,
             modifiedOn: new Date(),
-            groupCode: 1,
         };
 
         this.setState({ saving: true });
 
         try {
-            if(!StringUtils.isEmpty(id)) {
-                data._id = id; //TODO: REmove this when the implementation of the edit.
-            } else {
+            if(StringUtils.isEmpty(data._id)) {
                 data.createdOn = new Date();
                 data.createdBy = 1;
+                data.groupCode = 1,
 
                 Meteor.call('addGithubUser', data, error => {
                     if(!error) {
@@ -106,9 +105,17 @@ class GithubUsersForm extends React.Component {
                         onClose(data);
                     }
                 });
+            } else {
+                Meteor.call('updateGithubUser', data, error => {
+                    if(!error) {
+                        message.success('Github User updated succesfully!');
+
+                        onClose(data);
+                    }
+                });
             }
         } catch (e) {
-            message.error('There was an error while trying to save the User.');
+            message.error('There was an error while trying to save the User data.');
         } finally {
             this.setState({ saving: false });
         }
