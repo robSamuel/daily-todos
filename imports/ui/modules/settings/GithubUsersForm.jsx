@@ -1,5 +1,7 @@
 import React from 'react';
+import { message } from 'antd';
 import PropTypes from 'prop-types';
+import { StringUtils } from '/lib/StringUtils';
 import { isEmpty } from 'lodash';
 import { StylesMUI } from '/lib/styles/StylesMUI';
 import {ModalAppBar } from '/imports/ui/components/widgets/ModalAppBar';
@@ -12,6 +14,7 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 /* Material UI Dialog */
 const styles = theme =>
@@ -49,35 +52,86 @@ class GithubUsersForm extends React.Component {
     constructor(props) {
         super(props);
 
+        const data = isEmpty(props.record) ?
+            {
+                firstName: '',
+                lastName: '',
+                userName: '',
+                showFollowers: false,
+                showFollowing: false
+            } :
+            { ...props.record };
+
         this.state = {
-            firstName: '',
-            lastName: '',
-            userName: '',
-            showFollowers: false,
-            showFollowing: false
+            data,
+            saving: false
         };
 
         this.initBind();
     }
 
     static propTypes = {
-        id: PropTypes.number,
-        data: PropTypes.object,
+        record: PropTypes.object,
         opened: PropTypes.bool.isRequired,
         onClose: PropTypes.func.isRequired,
     };
 
     initBind() {
         this.onSave = this.onSave.bind(this);
+        this.onClose = this.onClose.bind(this);
         this.onChange = this.onChange.bind(this);
     }
 
     onSave() {
+        const { props: { onClose }, state: { data: userData} } = this;
+        const data = {
+            ...userData,
+            modifiedBy: 1,
+            modifiedOn: new Date(),
+        };
 
+        this.setState({ saving: true });
+
+        try {
+            if(StringUtils.isEmpty(data._id)) {
+                data.createdOn = new Date();
+                data.createdBy = 1;
+                data.groupCode = 1,
+
+                Meteor.call('addGithubUser', data, error => {
+                    if(!error) {
+                        message.success('Github User added succesfully!');
+
+                        onClose(data);
+                    }
+                });
+            } else {
+                Meteor.call('updateGithubUser', data, error => {
+                    if(!error) {
+                        message.success('Github User updated succesfully!');
+
+                        onClose(data);
+                    }
+                });
+            }
+        } catch (e) {
+            message.error('There was an error while trying to save the User data.');
+        } finally {
+            this.setState({ saving: false });
+        }
     }
 
     onChange(field, value) {
-        this.setState({ [field]: value });
+        this.setState(prevState => ({
+            data: { ...prevState.data, [field]: value }
+        }));
+    }
+
+    onClose() {
+        const { props: { onClose, record } } = this;
+        const data = isEmpty(record) ? null : record;
+
+        onClose(data);
     }
 
     renderTextField(label, fieldValue, fieldName) {
@@ -129,15 +183,17 @@ class GithubUsersForm extends React.Component {
             props: {
                 classes,
                 opened,
-                onClose,
                 data
             },
             state: {
-                firstName,
-                lastName,
-                userName,
-                showFollowers,
-                showFollowing
+                saving,
+                data: {
+                    firstName,
+                    lastName,
+                    userName,
+                    showFollowers,
+                    showFollowing
+                }
             }
         } = this;
         const modalTitle = isEmpty(data) ? 'New' : 'Edit';
@@ -145,14 +201,14 @@ class GithubUsersForm extends React.Component {
         return(
             <Dialog
                 open={opened}
-                onClose={onClose}
+                onClose={this.onClose}
                 disableBackdropClick
                 maxWidth="sm"
                 fullWidth={true}
             >
                 <ModalAppBar
                     title={`${modalTitle} Github User`}
-                    onClose={onClose}
+                    onClose={this.onClose}
                 />
                 <DialogContent className={classes.dialogContent} dividers>
                     <div className={classes.dialogColumns}>
@@ -182,6 +238,12 @@ class GithubUsersForm extends React.Component {
                         onClick={this.onSave}
                     >
                         Save
+                        {saving && (
+                            <CircularProgress
+                                size={24}
+                                className={classes.buttonProgress}
+                            />
+                        )}
                     </Button>
                 </DialogActions>
             </Dialog>
