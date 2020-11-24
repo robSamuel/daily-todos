@@ -2,16 +2,36 @@
   "name": "daily-todos",
   "private": true,
   "scripts": {
-    "start": "meteor run",
+    "start": "meteor --settings settings.json",
+    "lint": "./node_modules/.bin/eslint ./lib --ext .js,.jsx && ./node_modules/.bin/eslint ./imports --ext .js,.jsx",
+    "lint-fix": "eslint --fix ./lib --ext .js,.jsx && eslint --fix ./imports --ext .js,.jsx",
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
     "visualize": "meteor --production --extra-packages bundle-visualizer"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.5",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/pickers": "^3.2.10",
+    "antd": "^4.8.4",
+    "array-move": "^3.0.1",
+    "axios": "^0.21.0",
+    "bcrypt": "^5.0.0",
+    "classnames": "^2.2.6",
+    "graphql": "^15.4.0",
+    "lodash": "^4.17.20",
     "meteor-node-stubs": "^1.0.1",
+    "moment": "^2.29.1",
+    "numeral": "^2.0.6",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-hot-keys": "^2.6.0",
+    "react-router-dom": "^5.2.0",
+    "react-table": "^6.8.2",
+    "react-table-hoc-draggable-columns": "^1.2.5",
+    "string": "^3.3.3",
+    "subscriptions-transport-ws": "^0.9.18",
+    "uuid": "^8.3.1"
   },
   "meteor": {
     "mainModule": {
@@ -19,5 +39,29 @@
       "server": "server/main.js"
     },
     "testModule": "tests/main.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/register": "^7.12.1",
+    "@meteorjs/eslint-config-meteor": "^1.0.5",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.1",
+    "babel-runtime": "^6.26.0",
+    "eslint": "^7.13.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-import-resolver-meteor": "^0.4.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-meteor": "^7.2.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.0.0",
+    "lint-staged": "^10.5.1",
+    "prettier": "^2.1.2",
+    "webpack": "^5.5.0"
   }
 }
