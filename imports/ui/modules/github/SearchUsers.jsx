@@ -66,6 +66,18 @@ function UsersList(usersList) {
                 <div
                     key={`${index}-${user.id}`}
                     className='user-container'
+                    onClick={() => {
+                        const params = {
+                            id: user.login
+                        };
+
+                        if(history) {
+                            history.push({
+                                pathname: `/github/user/${user.login}`,
+                                state: params
+                            });
+                        }
+                    }}
                 >
                     <Avatar className={classes.avatar} src={user.avatar_url} alt='avatar' />
                     <label><strong>ID:</strong> {user.id}</label>
