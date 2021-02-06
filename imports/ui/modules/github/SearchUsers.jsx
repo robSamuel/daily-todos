@@ -4,6 +4,7 @@ import '/imports/ui/styles/User.css';
 import { useHistory } from 'react-router';
 import ArrayUtils from '/lib/ArrayUtils';
 import { StringUtils } from '/lib/StringUtils';
+import { DialogConfirm } from '/imports/ui/components/widgets/DialogConfirm';
 import { GithubRequests, MainURL, URL } from '/lib/httpModules/GithubRequests';
 import {
     ResponsiveContainer,
@@ -342,6 +343,15 @@ function SearchUsers() {
                         <UsersList users={users} />
                     </div>
                 </div>
+            )}
+            {hasError && (
+                <DialogConfirm
+                    opened={hasError}
+                    title="There was an error trying to retrieve the users"
+                    description={errorMessage}
+                    onClose={() => setHasError(false)}
+                    onAccept={() => setHasError(false)}
+                />
             )}
         </div>
     );
