@@ -29,6 +29,7 @@
     "react-router-dom": "^5.2.0",
     "react-table": "^6.8.2",
     "react-table-hoc-draggable-columns": "^1.2.5",
+    "recharts": "^2.0.4",
     "string": "^3.3.3",
     "subscriptions-transport-ws": "^0.9.18",
     "uuid": "^8.3.1"

@@ -4,7 +4,18 @@ import '/imports/ui/styles/User.css';
 import { useHistory } from 'react-router';
 import ArrayUtils from '/lib/ArrayUtils';
 import { StringUtils } from '/lib/StringUtils';
-import { GithubRequests } from '/lib/httpModules/GithubRequests';
+import { GithubRequests, MainURL, URL } from '/lib/httpModules/GithubRequests';
+import {
+    ResponsiveContainer,
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    LabelList,
+    Cell,
+} from 'recharts';
 
 /*Material UI*/
 import Avatar from '@material-ui/core/Avatar';
@@ -13,6 +24,51 @@ import green from '@material-ui/core/colors/green';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+const BAR_COLORS = [
+    '#f2ae4d',
+    '#36c63a',
+    '#fcd00a',
+    '#f2ae4d',
+    '#d47203',
+    '#f95e14',
+    '#d26268',
+    '#ec1217',
+    '#d47203',
+    '#f95e14',
+    '#f2ae4d',
+    '#36c63a',
+    '#fcd00a',
+    '#f2ae4d',
+    '#d47203',
+    '#f95e14',
+    '#d26268',
+    '#ec1217',
+    '#d47203',
+    '#f95e14',
+];
+const TEXT_COLORS = [
+    '#3d3d3d',
+    '#9e92fa',
+    '#9e92fa',
+    '#9e92fa',
+    '#9e92fa',
+    '#9e92fa',
+    '#9e92fa',
+    '#9e92fa',
+    '#3d3d3d',
+    '#3d3d3d',
+    '#3d3d3d',
+    '#9e92fa',
+    '#9e92fa',
+    '#9e92fa',
+    '#9e92fa',
+    '#9e92fa',
+    '#9e92fa',
+    '#9e92fa',
+    '#3d3d3d',
+    '#3d3d3d',
+];
 
 const http = new GithubRequests();
 
@@ -54,6 +110,102 @@ const validateSearching = (user) => {
 
     return enabledSearch;
 };
+
+function FollowersGraphic(usersList) {
+    const { users } = usersList;
+    const [ followersList, setFollowersList ] = useState([]);
+    const retrieveFollowers = useCallback(() => {
+        const recordsToReturn = [];
+        const requests = users.map(user => {
+            return new Promise((resolve, reject) => {
+                const url = `${MainURL}${URL.USER_DETAILS}${user.login}`;
+
+                request({
+                    uri: url,
+                    method: 'GET'
+                },
+                (err, res, body) => {
+                    if(err)
+                        reject(err);
+
+                    resolve(body);
+                });
+            });
+        });
+
+        Promise.all(requests).then(body => {
+            body.forEach(res => {
+                if(res) {
+                    const response = JSON.parse(res);
+
+                    recordsToReturn.push({
+                        name: response.login,
+                        top: 0,
+                        followers: response.followers
+                    });
+                }
+            });
+
+            setFollowersList(recordsToReturn);
+        });
+    }, [users]);
+
+    useEffect(() => {
+        retrieveFollowers();
+    }, [retrieveFollowers]);
+
+    return (
+        <div className='graphic-main-container'>
+            <div className='graphic-wrapper'>
+                <ResponsiveContainer>
+                    <BarChart
+                        data={followersList}
+                        margin={{ top: 60, right: 5, left: 5, bottom: 60 }}
+                    >
+                        <XAxis
+                            dataKey='name'
+                            minTickGap={0}
+                            tickMargin={0}
+                            label={{
+                                value: 'Users',
+                                position: 'bottom',
+                                textAnchor: 'middle'
+                            }}
+                        />
+                        <YAxis
+                            width={40}
+                            label={{
+                                value: 'Followers',
+                                angle: -90,
+                                position: 'insideLeft',
+                                textAnchor: 'middle'
+                            }}
+                        />
+                        <CartesianGrid strokeDasharray='3 3' />
+                        <Tooltip />
+                        <Bar dataKey='followers' stackId='a' fill='#8884d8'>
+                            {followersList.map((item, index) => {
+                                <LabelList
+                                    dataKe='name'
+                                    key={`label-${index}`}
+                                    position='insideTop'
+                                    fill={TEXT_COLORS[index]}
+                                    angle='-90'
+                                />;
+                            })}
+                            {followersList.map((entry, index) => (
+                                <Cell
+                                    key={`cell-${index}`}
+                                    fill={BAR_COLORS[index]}
+                                />
+                            ))}
+                        </Bar>
+                    </BarChart>
+                </ResponsiveContainer>
+            </div>
+        </div>
+    );
+}
 
 function UsersList(usersList) {
     const history = useHistory();
@@ -187,6 +339,7 @@ function SearchUsers() {
             {hasUsers && (
                 <div className="searching-result-container">
                     <div className="searching-result-subcontainer">
+                        <FollowersGraphic users={users} />
                         <UsersList users={users} />
                     </div>
                 </div>
