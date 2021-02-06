@@ -1,32 +1,32 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import withRoot from './layouts/withRoot';
-import { Settings } from '/imports/ui/modules/settings/Settings';
 import { MainLayout } from '/imports/ui/layouts/MainLayout';
+import { Settings } from '/imports/ui/modules/settings/Settings';
+import { SearchUsers } from '/imports/ui/modules/github/SearchUsers';
 
 class DailyTodos extends React.Component {
     constructor(props) {
         super(props);
-
-        this.initBind();
     }
 
-    initBind() {
-
-    }
-
-    //TODO: Render the modules from here
     renderModules() {
         return(
-            <React.Fragment>
+            <Switch>
+                <Route
+                    path='/github'
+                    render={params => (
+                        <SearchUsers {...params} />
+                    )}
+                />
                 <Route
                     path='/settings'
                     render={params => (
                         <Settings {...params} />
                     )}
                 />
-            </React.Fragment>
+            </Switch>
         );
     }
 

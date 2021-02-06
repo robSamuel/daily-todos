@@ -2,7 +2,7 @@
   "name": "daily-todos",
   "private": true,
   "scripts": {
-    "start": "meteor --settings settings.json",
+    "start": "meteor run",
     "lint": "./node_modules/.bin/eslint ./lib --ext .js,.jsx && ./node_modules/.bin/eslint ./imports --ext .js,.jsx",
     "lint-fix": "eslint --fix ./lib --ext .js,.jsx && eslint --fix ./imports --ext .js,.jsx",
     "test": "meteor test --once --driver-package meteortesting:mocha",
