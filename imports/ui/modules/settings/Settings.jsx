@@ -68,7 +68,7 @@ class Settings extends React.Component {
                         textColor="primary"
                         centered
                     >
-                        <Tab label="General" icon={<DesktopWindowsIcon />} />
+                        <Tab label="General" disabled icon={<DesktopWindowsIcon />} />
                         <Tab label="Github" icon={<GitHubIcon />} />
                         <Tab label="Work Out" disabled icon={<FitnessCenterIcon />} />
                         <Tab label="Twitter" disabled icon={<TwitterIcon />} />

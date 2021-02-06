@@ -270,7 +270,6 @@ function SearchUsers() {
 
                             setIsSearching(false);
                             setUsers(retrievedUsers);
-                            console.log(retrievedUsers);
                         } else if(result.statusCode !== 404) {
                             setHasError(true);
                             setErrorMessage(result.message);

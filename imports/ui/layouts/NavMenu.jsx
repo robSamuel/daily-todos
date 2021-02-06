@@ -52,6 +52,12 @@ class MainMenu extends React.Component {
                     selected: false,
                     badgeText: 'BETA',
                 },
+                {
+                    text: 'Github',
+                    to: '/github',
+                    icon: '/icons/nav/twitter.svg',
+                    selected: false
+                }
             ]
         };
 
