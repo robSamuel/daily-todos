@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { GithubSettings } from '/imports/ui/modules/settings/panels/GithubSettings';
 
 /*Material UI*/
@@ -8,12 +7,12 @@ import Tabs from '@material-ui/core/Tabs';
 import AppBar from '@material-ui/core/AppBar';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TwitterIcon from '@material-ui/icons/Twitter';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows';
 
-const styles = () => ({
+const useStyles = makeStyles({
     root: {
         display: 'flex',
         flexDirection: 'column',
@@ -26,85 +25,59 @@ const styles = () => ({
         flex: 1,
         display: 'flex',
         background: '#FFF',
-        marginTop: '10pxy',
+        marginTop: '10px',
         overflow: 'hidden',
     }
 });
 
-class Settings extends React.Component {
-    constructor(props) {
-        super(props);
+function Settings() {
+    const classes = useStyles();
+    const [ selectedTab, setSelectedTab ] = useState(1);
 
-        this.state = {
-            selectedTab: 0,
-        };
-
-        this.initBind();
-    }
-
-    static propTypes = {
-        classes: PropTypes.object.isRequired,
-    };
-
-    initBind() {
-        this.onChangeTab = this.onChangeTab.bind(this);
-    }
-
-    onChangeTab(event, value) {
-        this.setState({ selectedTab: value });
-    }
-
-    //TODO: The divs are for example purposes, delete them before finish this task.
-    render() {
-        const { props: { classes }, state: { selectedTab } } = this;
-
-        return (
-            <div className={classes.root}>
-                <AppBar position="static" color="default">
-                    <Tabs
-                        value={selectedTab}
-                        onChange={this.onChangeTab}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        centered
-                    >
-                        <Tab label="General" disabled icon={<DesktopWindowsIcon />} />
-                        <Tab label="Github" icon={<GitHubIcon />} />
-                        <Tab label="Work Out" disabled icon={<FitnessCenterIcon />} />
-                        <Tab label="Twitter" disabled icon={<TwitterIcon />} />
-                        <Tab label="Finances" disabled icon={<AttachMoneyIcon />} />
-                    </Tabs>
-                </AppBar>
-                {selectedTab === 0 && (
-                    <div className={classes.tabContainerStyle}>
-                        <label htmlFor="">General</label>
-                    </div>
-                )}
-                {selectedTab === 1 && (
-                    <div className={classes.tabContainerStyle}>
-                        <GithubSettings />
-                    </div>
-                )}
-                {selectedTab === 2 && (
-                    <div className={classes.tabContainerStyle}>
-                        <label htmlFor="">Work Out</label>
-                    </div>
-                )}
-                {selectedTab === 3 && (
-                    <div className={classes.tabContainerStyle}>
-                        <label htmlFor="">Twitter</label>
-                    </div>
-                )}
-                {selectedTab === 4 && (
-                    <div className={classes.tabContainerStyle}>
-                        <label htmlFor="">Finances</label>
-                    </div>
-                )}
-            </div>
-        );
-    }
+    return (
+        <div className={classes.root}>
+            <AppBar position="static" color="default">
+                <Tabs
+                    value={selectedTab}
+                    onChange={setSelectedTab}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    centered
+                >
+                    <Tab label="General" disabled icon={<DesktopWindowsIcon />} />
+                    <Tab label="Github" icon={<GitHubIcon />} />
+                    <Tab label="Work Out" disabled icon={<FitnessCenterIcon />} />
+                    <Tab label="Twitter" disabled icon={<TwitterIcon />} />
+                    <Tab label="Finances" disabled icon={<AttachMoneyIcon />} />
+                </Tabs>
+            </AppBar>
+            {selectedTab === 0 && (
+                <div className={classes.tabContainerStyle}>
+                    <label htmlFor="">General</label>
+                </div>
+            )}
+            {selectedTab === 1 && (
+                <div className={classes.tabContainerStyle}>
+                    <GithubSettings />
+                </div>
+            )}
+            {selectedTab === 2 && (
+                <div className={classes.tabContainerStyle}>
+                    <label htmlFor="">Work Out</label>
+                </div>
+            )}
+            {selectedTab === 3 && (
+                <div className={classes.tabContainerStyle}>
+                    <label htmlFor="">Twitter</label>
+                </div>
+            )}
+            {selectedTab === 4 && (
+                <div className={classes.tabContainerStyle}>
+                    <label htmlFor="">Finances</label>
+                </div>
+            )}
+        </div>
+    );
 }
 
-const wrapped = withStyles(styles)(Settings);
-
-export { wrapped as Settings };
+export { Settings };
