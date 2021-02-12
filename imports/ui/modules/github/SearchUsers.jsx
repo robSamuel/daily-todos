@@ -21,7 +21,9 @@ import {
 /*Material UI*/
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import ClearIcon from '@material-ui/icons/Clear';
 import green from '@material-ui/core/colors/green';
+import SearchIcon from '@material-ui/icons/Search';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -97,7 +99,7 @@ const useStyles = makeStyles({
         height: 36,
     },
     emptyButton: {
-        width: 140,
+        width: 142,
         height: 36,
     },
     avatar: {
@@ -226,7 +228,7 @@ function UsersList(usersList) {
 
                         if(history) {
                             history.push({
-                                pathname: `/github/user/${user.login}`,
+                                pathname: `/github/${user.login}`,
                                 state: params
                             });
                         }
@@ -314,6 +316,7 @@ function SearchUsers() {
                     onClick={fetchUsers}
                     disabled={disableSearch}
                 >
+                    <SearchIcon />
                     Search
                     {isSearching && (
                         <CircularProgress
@@ -332,6 +335,7 @@ function SearchUsers() {
                             setUsers([]);
                         }}
                     >
+                        <ClearIcon />
                         Empty List
                     </Button>
                 )}

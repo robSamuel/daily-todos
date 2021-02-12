@@ -5,6 +5,7 @@ import withRoot from './layouts/withRoot';
 import { MainLayout } from '/imports/ui/layouts/MainLayout';
 import { Settings } from '/imports/ui/modules/settings/Settings';
 import { SearchUsers } from '/imports/ui/modules/github/SearchUsers';
+import { UserDetails } from '/imports/ui/modules/github/UserDetails';
 
 class DailyTodos extends React.Component {
     constructor(props) {
@@ -14,6 +15,13 @@ class DailyTodos extends React.Component {
     renderModules() {
         return(
             <Switch>
+                <Route
+                    path='/github/:id'
+                    exact
+                    render={params => (
+                        <UserDetails {...params} />
+                    )}
+                />
                 <Route
                     path='/github'
                     render={params => (
