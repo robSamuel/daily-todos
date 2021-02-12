@@ -2,7 +2,7 @@
   "name": "daily-todos",
   "private": true,
   "scripts": {
-    "start": "meteor --settings settings.json",
+    "start": "meteor run",
     "lint": "./node_modules/.bin/eslint ./lib --ext .js,.jsx && ./node_modules/.bin/eslint ./imports --ext .js,.jsx",
     "lint-fix": "eslint --fix ./lib --ext .js,.jsx && eslint --fix ./imports --ext .js,.jsx",
     "test": "meteor test --once --driver-package meteortesting:mocha",
@@ -12,6 +12,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/pickers": "^3.2.10",
     "antd": "^4.8.4",
     "array-move": "^3.0.1",
@@ -29,6 +30,7 @@
     "react-router-dom": "^5.2.0",
     "react-table": "^6.8.2",
     "react-table-hoc-draggable-columns": "^1.2.5",
+    "recharts": "^2.0.4",
     "string": "^3.3.3",
     "subscriptions-transport-ws": "^0.9.18",
     "uuid": "^8.3.1"
