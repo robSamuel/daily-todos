@@ -41,7 +41,7 @@ class MainMenu extends React.Component {
                 {
                     text: 'Work Out',
                     to: '/work-out',
-                    icon: '/icons/nav//work-out.png',
+                    icon: '/icons/nav/work-out.png',
                     selected: false,
                     badgeText: 'BETA',
                 },
@@ -52,6 +52,12 @@ class MainMenu extends React.Component {
                     selected: false,
                     badgeText: 'BETA',
                 },
+                {
+                    text: 'Github',
+                    to: '/github',
+                    icon: '/icons/nav/github.svg',
+                    selected: false
+                }
             ]
         };
 
