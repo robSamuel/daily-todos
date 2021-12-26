@@ -6,6 +6,7 @@ import { MainLayout } from '/imports/ui/layouts/MainLayout';
 import { Settings } from '/imports/ui/modules/settings/Settings';
 import { SearchUsers } from '/imports/ui/modules/github/SearchUsers';
 import { UserDetails } from '/imports/ui/modules/github/UserDetails';
+import BillingList from '/imports/ui/modules/billing/BillingList';
 
 class DailyTodos extends React.Component {
     constructor(props) {
@@ -32,6 +33,12 @@ class DailyTodos extends React.Component {
                     path='/settings'
                     render={params => (
                         <Settings {...params} />
+                    )}
+                />
+                <Route
+                    path='/billing'
+                    render={params => (
+                        <BillingList {...params} />
                     )}
                 />
             </Switch>
