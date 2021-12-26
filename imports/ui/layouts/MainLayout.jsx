@@ -1,7 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
-import { MainMenu } from '/imports/ui/layouts/NavMenu';
+// import { MainMenu } from '/imports/ui/layouts/NavMenu';
+import MainMenu from '../components/MainMenu';
 
 /* Material UI */
 import Menu from '@material-ui/core/Menu';
