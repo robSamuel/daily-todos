@@ -5,6 +5,7 @@ import { isEmpty } from 'lodash';
 import Button from '@material-ui/core/Button';
 import { SettingsPanel } from '/imports/ui/components/widgets/SettingsPanel';
 import { Table } from '/imports/ui/components/widgets/Table';
+import useProducts from '/lib/services/useProducts';
 import { formatAmount } from '/lib/utils/numberUtils'; 
 import { useStyles } from './styles';
 
@@ -18,9 +19,10 @@ const columnStyle = {
 };
 
 const BillingList = () => {
-  const [products, setProducts] = useState([]);
   const [selectedRecord, setSelectedRecord] = useState(null);
-  const classes = useStyles();
+  const { products, loading } = useProducts('GET');
+  const classes = useStyles();  
+
   const onCreate = () => {};
 
   const onEdit = () => {};
@@ -39,7 +41,7 @@ const BillingList = () => {
     {
       Header: 'Id',
       accessor: 'ProductId',
-      style: {...columnStyle, width: 70 },
+      style: {...columnStyle, width: 50 },
     },
     {
       Header: 'SKU',
@@ -103,6 +105,7 @@ const BillingList = () => {
       data={products}
       columns={getColumns()}
       load={false}
+      loading={loading}
       rowSelected={false}
       getTrProps={(state, rowInfo) => {
         const record = rowInfo.original;
